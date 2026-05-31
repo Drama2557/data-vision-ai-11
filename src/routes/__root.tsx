@@ -77,14 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "DataVision AI — AI-powered business analytics" },
+      { name: "description", content: "Monitor revenue, marketing, sales, and customers with intelligent dashboards powered by AI." },
+      { name: "author", content: "DataVision AI" },
+      { property: "og:title", content: "DataVision AI" },
+      { property: "og:description", content: "AI-powered business analytics for modern teams." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
