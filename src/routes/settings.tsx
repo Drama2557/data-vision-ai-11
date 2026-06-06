@@ -23,8 +23,8 @@ function Settings() {
       <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6">
         <nav className="space-y-1 lg:sticky lg:top-24 h-fit">
           {tabs.map((t) => (
-            <button key={t.id} onClick={() => setTab(t.id)} className={`w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${tab === t.id ? "bg-gradient-primary text-primary-foreground shadow-md" : "hover:bg-accent text-muted-foreground"}`}>
-              <t.icon className="h-4 w-4" /> {t.label}
+            <button key={t.id} onClick={() => setTab(t.id)} className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${tab === t.id ? "bg-gradient-primary text-primary-foreground shadow-md shadow-primary/25" : "hover:bg-accent text-muted-foreground hover:text-foreground"}`}>
+              <t.icon className="h-4 w-4 shrink-0" /> {t.label}
             </button>
           ))}
         </nav>
@@ -61,17 +61,17 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-const inputCls = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition";
+const inputCls = "w-full rounded-xl border border-border bg-card/60 px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus:border-primary/60 focus:shadow-[0_0_0_3px_oklch(0.76_0.22_210_/_0.1)] transition-all";
 
 function ProfileTab() {
   return (
     <>
       <Section title="Personal information" desc="Update your account details and profile">
-        <div className="flex items-center gap-5 mb-6 pb-6 border-b border-border/60">
-          <div className="h-20 w-20 rounded-2xl bg-gradient-primary text-primary-foreground flex items-center justify-center text-2xl font-semibold shadow-elegant">AM</div>
+        <div className="flex items-center gap-5 mb-6 pb-6 border-b border-border/50">
+          <div className="h-20 w-20 rounded-2xl bg-gradient-primary text-primary-foreground flex items-center justify-center text-2xl font-semibold shadow-elegant shadow-primary/20">AM</div>
           <div>
-            <button className="rounded-lg bg-foreground text-background px-4 py-2 text-sm font-medium mr-2">Upload new</button>
-            <button className="rounded-lg border border-border px-4 py-2 text-sm">Remove</button>
+            <button className="rounded-xl bg-primary/10 border border-primary/30 text-primary px-4 py-2 text-sm font-semibold mr-2 hover:bg-primary/20 transition-all">Upload new</button>
+            <button className="rounded-xl border border-border px-4 py-2 text-sm hover:bg-accent hover:border-primary/30 transition-all">Remove</button>
             <p className="text-xs text-muted-foreground mt-2">JPG, PNG or GIF. Max 2MB.</p>
           </div>
         </div>
@@ -90,8 +90,8 @@ function ProfileTab() {
           </Field>
         </div>
         <div className="flex justify-end gap-2 mt-6">
-          <button className="rounded-lg border border-border px-4 py-2 text-sm">Cancel</button>
-          <button className="rounded-lg bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-medium shadow-md">Save changes</button>
+          <button className="rounded-xl border border-border px-4 py-2 text-sm hover:bg-accent hover:border-primary/30 transition-all">Cancel</button>
+          <button className="rounded-xl bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-semibold shadow-md shadow-primary/25 hover:shadow-glow transition-all">Save changes</button>
         </div>
       </Section>
 
@@ -101,9 +101,11 @@ function ProfileTab() {
           { icon: Smartphone, label: "Push notifications", desc: "Real-time alerts on mobile" },
           { icon: Globe, label: "Product updates", desc: "New features and improvements" },
         ].map((n, i) => (
-          <div key={n.label} className={`flex items-center justify-between py-4 ${i > 0 ? "border-t border-border/60" : ""}`}>
+          <div key={n.label} className={`flex items-center justify-between py-4 ${i > 0 ? "border-t border-border/50" : ""}`}>
             <div className="flex items-start gap-3">
-              <n.icon className="h-4 w-4 text-muted-foreground mt-1" />
+              <div className="h-8 w-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5">
+                <n.icon className="h-4 w-4 text-primary" />
+              </div>
               <div>
                 <p className="text-sm font-medium">{n.label}</p>
                 <p className="text-xs text-muted-foreground">{n.desc}</p>
@@ -120,8 +122,8 @@ function ProfileTab() {
 function Toggle({ defaultOn = false }: { defaultOn?: boolean }) {
   const [on, setOn] = useState(defaultOn);
   return (
-    <button onClick={() => setOn(!on)} className={`relative h-6 w-11 rounded-full transition ${on ? "bg-gradient-primary" : "bg-secondary"}`}>
-      <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${on ? "translate-x-5" : "translate-x-0.5"}`} />
+    <button onClick={() => setOn(!on)} className={`relative h-6 w-11 rounded-full transition-all ${on ? "bg-gradient-primary shadow-sm shadow-primary/25" : "bg-secondary border border-border"}`}>
+      <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${on ? "translate-x-5" : "translate-x-0.5"}`} />
     </button>
   );
 }
@@ -137,20 +139,20 @@ function SecurityTab() {
           <Field label="Confirm new password"><input className={inputCls} type="password" /></Field>
         </div>
         <div className="flex justify-end mt-6">
-          <button className="rounded-lg bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-medium shadow-md">Update password</button>
+          <button className="rounded-xl bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-semibold shadow-md shadow-primary/25 hover:shadow-glow transition-all">Update password</button>
         </div>
       </Section>
 
       <Section title="Two-factor authentication" desc="Add an extra layer of security to your account">
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-success/10 text-success flex items-center justify-center"><KeyRound className="h-5 w-5" /></div>
+            <div className="h-10 w-10 rounded-xl bg-success/12 border border-success/25 text-success flex items-center justify-center"><KeyRound className="h-5 w-5" /></div>
             <div>
               <p className="text-sm font-medium">Authenticator app</p>
               <p className="text-xs text-muted-foreground">Enabled · Last used 2 hours ago</p>
             </div>
           </div>
-          <span className="inline-flex items-center gap-1 rounded-full bg-success/10 text-success px-3 py-1 text-xs font-medium"><Check className="h-3 w-3" /> Active</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-success/12 border border-success/25 text-success px-3 py-1 text-xs font-semibold"><Check className="h-3 w-3" /> Active</span>
         </div>
       </Section>
 
@@ -160,12 +162,12 @@ function SecurityTab() {
           { device: "iPhone 16 · Safari", loc: "San Francisco, CA", current: false },
           { device: "Windows · Edge", loc: "New York, NY · 2 days ago", current: false },
         ].map((s, i) => (
-          <div key={i} className={`flex items-center justify-between py-3 ${i > 0 ? "border-t border-border/60" : ""}`}>
+          <div key={i} className={`flex items-center justify-between py-3 ${i > 0 ? "border-t border-border/50" : ""}`}>
             <div>
-              <p className="text-sm font-medium">{s.device} {s.current && <span className="text-xs text-primary font-medium ml-2">· This device</span>}</p>
+              <p className="text-sm font-medium">{s.device} {s.current && <span className="text-xs text-primary font-semibold ml-2">· This device</span>}</p>
               <p className="text-xs text-muted-foreground">{s.loc}</p>
             </div>
-            {!s.current && <button className="text-xs text-destructive font-medium hover:underline">Sign out</button>}
+            {!s.current && <button className="text-xs text-destructive font-semibold hover:text-destructive/80 transition-colors">Sign out</button>}
           </div>
         ))}
       </Section>
@@ -184,18 +186,18 @@ function TeamTab() {
   return (
     <Section title="Team members" desc="Manage who has access to your workspace">
       <div className="flex justify-end mb-4">
-        <button className="rounded-lg bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-medium shadow-md">Invite member</button>
+        <button className="rounded-xl bg-gradient-primary text-primary-foreground px-4 py-2 text-sm font-semibold shadow-md shadow-primary/25 hover:shadow-glow transition-all">Invite member</button>
       </div>
       {team.map((m, i) => (
-        <div key={m.email} className={`flex items-center justify-between py-3 ${i > 0 ? "border-t border-border/60" : ""}`}>
+        <div key={m.email} className={`flex items-center justify-between py-3 ${i > 0 ? "border-t border-border/50" : ""}`}>
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">{m.avatar}</div>
+            <div className="h-10 w-10 rounded-full bg-gradient-primary text-primary-foreground flex items-center justify-center text-sm font-semibold shadow-sm shadow-primary/20">{m.avatar}</div>
             <div>
               <p className="text-sm font-medium">{m.name}</p>
               <p className="text-xs text-muted-foreground">{m.email}</p>
             </div>
           </div>
-          <select className="rounded-lg border border-border bg-background px-3 py-1.5 text-xs" defaultValue={m.role}>
+          <select className="rounded-xl border border-border bg-card/60 px-3 py-1.5 text-xs outline-none hover:border-primary/30 focus:border-primary/60 transition-all" defaultValue={m.role}>
             <option>Owner</option><option>Admin</option><option>Editor</option><option>Viewer</option>
           </select>
         </div>
@@ -208,17 +210,17 @@ function BillingTab() {
   return (
     <>
       <Section title="Current plan">
-        <div className="flex items-center justify-between p-5 rounded-xl bg-gradient-primary text-primary-foreground shadow-elegant">
+        <div className="flex items-center justify-between p-5 rounded-xl bg-gradient-primary text-primary-foreground shadow-elegant shadow-primary/25 border border-primary/20">
           <div>
-            <p className="text-sm opacity-80">You're on</p>
+            <p className="text-sm opacity-75">You're on</p>
             <p className="text-2xl font-semibold mt-1">Growth · $199/month</p>
-            <p className="text-sm opacity-80 mt-1">Renews on Dec 15, 2026</p>
+            <p className="text-sm opacity-75 mt-1">Renews on Dec 15, 2026</p>
           </div>
-          <button className="rounded-lg bg-background text-primary px-4 py-2 text-sm font-medium hover:bg-background/90">Upgrade plan</button>
+          <button className="rounded-xl bg-background/20 backdrop-blur border border-white/20 text-primary-foreground px-4 py-2 text-sm font-semibold hover:bg-background/30 transition-all">Upgrade plan</button>
         </div>
         <div className="grid sm:grid-cols-3 gap-4 mt-5">
           {[{ l: "Users", v: "5 of 25" }, { l: "Dashboards", v: "Unlimited" }, { l: "Data syncs / day", v: "8,420" }].map((x) => (
-            <div key={x.l} className="rounded-xl border border-border/60 p-4">
+            <div key={x.l} className="rounded-xl border border-border/60 bg-secondary/40 p-4">
               <p className="text-xs text-muted-foreground">{x.l}</p>
               <p className="text-lg font-semibold mt-1">{x.v}</p>
             </div>
@@ -227,22 +229,22 @@ function BillingTab() {
       </Section>
 
       <Section title="Payment method">
-        <div className="flex items-center justify-between rounded-xl border border-border/60 p-4">
+        <div className="flex items-center justify-between rounded-xl border border-border/60 bg-secondary/30 p-4">
           <div className="flex items-center gap-4">
-            <div className="h-10 w-14 rounded-lg bg-gradient-to-br from-foreground to-foreground/70 text-background flex items-center justify-center text-xs font-bold">VISA</div>
+            <div className="h-10 w-14 rounded-lg bg-gradient-primary text-primary-foreground flex items-center justify-center text-xs font-bold shadow-sm">VISA</div>
             <div>
               <p className="text-sm font-medium">Visa ending in 4242</p>
               <p className="text-xs text-muted-foreground">Expires 09/28</p>
             </div>
           </div>
-          <button className="text-xs text-primary font-medium hover:underline">Update</button>
+          <button className="text-xs text-primary font-semibold hover:text-primary-glow transition-colors">Update</button>
         </div>
       </Section>
 
       <Section title="Billing history">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <tr className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               <th className="py-2">Date</th><th className="py-2">Description</th><th className="py-2">Amount</th><th className="py-2 text-right">Receipt</th>
             </tr>
           </thead>
@@ -253,11 +255,11 @@ function BillingTab() {
               { d: "Sep 15, 2026", desc: "Growth plan — monthly", a: "$199.00" },
               { d: "Aug 15, 2026", desc: "Starter → Growth (prorated)", a: "$74.50" },
             ].map((r) => (
-              <tr key={r.d} className="border-t border-border/60">
+              <tr key={r.d} className="border-t border-border/50">
                 <td className="py-3 text-muted-foreground">{r.d}</td>
                 <td className="py-3 font-medium">{r.desc}</td>
                 <td className="py-3">{r.a}</td>
-                <td className="py-3 text-right"><a className="text-xs text-primary font-medium hover:underline" href="#">Download</a></td>
+                <td className="py-3 text-right"><a className="text-xs text-primary font-semibold hover:text-primary-glow transition-colors" href="#">Download</a></td>
               </tr>
             ))}
           </tbody>

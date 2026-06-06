@@ -19,40 +19,51 @@ const reports = [
   { name: "Product Usage Insights", type: "Product", date: "Nov 12, 2026", size: "2.7 MB", status: "Ready" },
 ];
 
+const tooltipStyle = {
+  background: "var(--color-card)",
+  border: "1px solid var(--color-border)",
+  borderRadius: 12,
+  fontSize: 12,
+  boxShadow: "0 8px 32px oklch(0 0 0 / 0.4)",
+};
+
+const filterCls = "flex items-center gap-2 rounded-xl border border-border bg-card/60 px-3 py-2 text-sm text-foreground hover:border-primary/30 hover:bg-accent transition-all";
+const selectCls = "rounded-xl border border-border bg-card/60 px-3 py-2 text-sm text-foreground outline-none hover:border-primary/30 focus:border-primary/60 transition-all";
+
 function Reports() {
   return (
     <DashboardLayout
       title="Reports"
       subtitle="Generate, schedule, and export your business reports"
       actions={
-        <button className="hidden md:inline-flex items-center gap-2 rounded-lg bg-gradient-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-md">
+        <button className="hidden md:inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/25 hover:shadow-glow transition-all">
           <FileBarChart className="h-4 w-4" /> New report
         </button>
       }
     >
       <div className="glass-card rounded-2xl p-5 mb-4">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm">
+          <button className={filterCls}>
             <Calendar className="h-4 w-4 text-muted-foreground" />
             <span>Nov 1 — Nov 30, 2026</span>
-          </div>
-          <select className="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+          </button>
+          <select className={selectCls}>
             <option>All categories</option><option>Finance</option><option>Marketing</option><option>Sales</option><option>Customer</option>
           </select>
-          <select className="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+          <select className={selectCls}>
             <option>All regions</option><option>North America</option><option>EMEA</option><option>APAC</option>
           </select>
-          <button className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm">
-            <Filter className="h-4 w-4" /> More filters
+          <button className={filterCls}>
+            <Filter className="h-4 w-4 text-muted-foreground" /> More filters
           </button>
           <div className="ml-auto flex gap-2">
-            <button className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm hover:bg-accent">
-              <FileSpreadsheet className="h-4 w-4" /> Excel
+            <button className={filterCls}>
+              <FileSpreadsheet className="h-4 w-4 text-muted-foreground" /> Excel
             </button>
-            <button className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm hover:bg-accent">
-              <FileText className="h-4 w-4" /> PDF
+            <button className={filterCls}>
+              <FileText className="h-4 w-4 text-muted-foreground" /> PDF
             </button>
-            <button className="inline-flex items-center gap-2 rounded-lg bg-foreground text-background px-3 py-2 text-sm">
+            <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary text-primary-foreground px-3 py-2 text-sm font-semibold shadow-sm shadow-primary/25 hover:shadow-glow transition-all">
               <Download className="h-4 w-4" /> Export all
             </button>
           </div>
@@ -68,7 +79,7 @@ function Reports() {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
               <XAxis dataKey="month" stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} />
               <YAxis stroke="var(--color-muted-foreground)" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `$${v / 1000}k`} />
-              <Tooltip contentStyle={{ background: "var(--color-card)", border: "1px solid var(--color-border)", borderRadius: 12, fontSize: 12 }} />
+              <Tooltip contentStyle={tooltipStyle} />
               <Bar dataKey="revenue" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
               <Bar dataKey="expenses" fill="var(--color-chart-2)" radius={[6, 6, 0, 0]} />
               <Bar dataKey="profit" fill="var(--color-chart-3)" radius={[6, 6, 0, 0]} />
@@ -84,7 +95,7 @@ function Reports() {
             { label: "Reports generated", value: "184" },
             { label: "Scheduled exports", value: "23" },
           ].map((s) => (
-            <div key={s.label} className="flex items-center justify-between py-3 border-b border-border/60 last:border-0">
+            <div key={s.label} className="flex items-center justify-between py-3 border-b border-border/50 last:border-0">
               <span className="text-sm text-muted-foreground">{s.label}</span>
               <span className="text-sm font-semibold">{s.value}</span>
             </div>
@@ -93,14 +104,14 @@ function Reports() {
       </div>
 
       <div className="glass-card rounded-2xl overflow-hidden">
-        <div className="p-5 border-b border-border/60">
+        <div className="p-5 border-b border-border/50">
           <h3 className="font-semibold">Recent reports</h3>
           <p className="text-xs text-muted-foreground">Generated automatically from your data</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-secondary/50">
-              <tr className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <thead className="bg-secondary/40">
+              <tr className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 <th className="px-5 py-3">Name</th>
                 <th className="px-5 py-3">Type</th>
                 <th className="px-5 py-3">Date</th>
@@ -111,16 +122,23 @@ function Reports() {
             </thead>
             <tbody>
               {reports.map((r) => (
-                <tr key={r.name} className="border-t border-border/60 hover:bg-accent/30">
-                  <td className="px-5 py-4 font-medium flex items-center gap-3"><FileText className="h-4 w-4 text-primary" /> {r.name}</td>
-                  <td className="px-5 py-4"><span className="inline-flex rounded-full bg-secondary px-2.5 py-1 text-xs font-medium">{r.type}</span></td>
+                <tr key={r.name} className="border-t border-border/40 hover:bg-accent/25 transition-colors">
+                  <td className="px-5 py-4 font-medium">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                        <FileText className="h-4 w-4 text-primary" />
+                      </div>
+                      {r.name}
+                    </div>
+                  </td>
+                  <td className="px-5 py-4"><span className="inline-flex rounded-full bg-secondary/80 border border-border/60 px-2.5 py-1 text-xs font-medium">{r.type}</span></td>
                   <td className="px-5 py-4 text-muted-foreground">{r.date}</td>
                   <td className="px-5 py-4 text-muted-foreground">{r.size}</td>
                   <td className="px-5 py-4">
-                    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${r.status === "Ready" ? "bg-success/10 text-success" : "bg-warning/10 text-warning"}`}>{r.status}</span>
+                    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold border ${r.status === "Ready" ? "bg-success/12 text-success border-success/20" : "bg-warning/12 text-warning border-warning/20"}`}>{r.status}</span>
                   </td>
                   <td className="px-5 py-4 text-right">
-                    <button className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                    <button className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary-glow transition-colors">
                       <Download className="h-3.5 w-3.5" /> Download
                     </button>
                   </td>

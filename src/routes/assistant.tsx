@@ -46,33 +46,36 @@ function Assistant() {
     <DashboardLayout title="AI Assistant" subtitle="Your always-on business analyst, powered by DataVision AI">
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-[calc(100vh-180px)]">
         <div className="xl:col-span-2 glass-card rounded-2xl flex flex-col overflow-hidden">
-          <div className="flex items-center gap-3 p-4 border-b border-border/60">
-            <div className="h-10 w-10 rounded-xl bg-gradient-primary flex items-center justify-center text-primary-foreground shadow-md">
+          <div className="flex items-center gap-3 p-4 border-b border-border/50">
+            <div className="h-10 w-10 rounded-xl bg-gradient-primary flex items-center justify-center text-primary-foreground shadow-md shadow-primary/25">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
               <p className="font-semibold">DataVision Assistant</p>
-              <p className="text-xs text-success flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" /> Online · Trained on your data</p>
+              <p className="text-xs text-success flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse shadow-[0_0_6px_var(--color-success)]" />
+                Online · Trained on your data
+              </p>
             </div>
           </div>
 
           <div className="flex-1 overflow-y-auto p-5 space-y-4">
             {messages.map((m, i) => (
               <div key={i} className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
-                <div className={`h-8 w-8 rounded-lg shrink-0 flex items-center justify-center text-xs font-semibold ${m.role === "ai" ? "bg-gradient-primary text-primary-foreground" : "bg-secondary"}`}>
+                <div className={`h-8 w-8 rounded-xl shrink-0 flex items-center justify-center text-xs font-semibold ${m.role === "ai" ? "bg-gradient-primary text-primary-foreground shadow-sm shadow-primary/25" : "bg-secondary border border-border"}`}>
                   {m.role === "ai" ? <Sparkles className="h-4 w-4" /> : "AM"}
                 </div>
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.role === "ai" ? "bg-secondary/60 border border-border/60" : "bg-gradient-primary text-primary-foreground"}`}>
+                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.role === "ai" ? "bg-secondary/60 border border-border/50" : "bg-gradient-primary text-primary-foreground shadow-sm shadow-primary/20"}`}>
                   {m.content}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="p-4 border-t border-border/60">
+          <div className="p-4 border-t border-border/50">
             <div className="flex flex-wrap gap-2 mb-3">
               {suggestions.map((s) => (
-                <button key={s} onClick={() => send(s)} className="text-xs rounded-full border border-border bg-background/60 px-3 py-1.5 hover:bg-accent transition">
+                <button key={s} onClick={() => send(s)} className="text-xs rounded-full border border-border bg-card/60 px-3 py-1.5 hover:border-primary/40 hover:bg-accent hover:text-foreground transition-all">
                   {s}
                 </button>
               ))}
@@ -84,9 +87,9 @@ function Assistant() {
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
                 placeholder="Ask anything about your business..."
                 rows={1}
-                className="flex-1 bg-transparent text-sm outline-none px-2 py-2 resize-none max-h-32"
+                className="flex-1 bg-transparent text-sm outline-none px-2 py-2 resize-none max-h-32 placeholder:text-muted-foreground"
               />
-              <button type="submit" className="h-9 w-9 rounded-xl bg-gradient-primary text-primary-foreground flex items-center justify-center shadow-md hover:shadow-glow transition">
+              <button type="submit" className="h-9 w-9 rounded-xl bg-gradient-primary text-primary-foreground flex items-center justify-center shadow-md shadow-primary/25 hover:shadow-glow transition-all shrink-0">
                 <Send className="h-4 w-4" />
               </button>
             </form>
@@ -95,13 +98,15 @@ function Assistant() {
 
         <div className="space-y-4 overflow-y-auto">
           <div className="glass-card rounded-2xl p-5">
-            <h3 className="font-semibold flex items-center gap-2 mb-1"><Lightbulb className="h-4 w-4 text-primary" /> Recommended actions</h3>
+            <h3 className="font-semibold flex items-center gap-2 mb-1">
+              <Lightbulb className="h-4 w-4 text-primary" /> Recommended actions
+            </h3>
             <p className="text-xs text-muted-foreground mb-4">AI-prioritized this week</p>
             <div className="space-y-3">
               {recommendations.map((r, i) => (
-                <div key={i} className="rounded-xl border border-border/60 p-3 hover:border-primary/40 transition">
+                <div key={i} className="rounded-xl border border-border/50 p-3 hover:border-primary/35 hover:bg-accent/30 transition-all cursor-pointer">
                   <div className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0"><r.icon className="h-4 w-4" /></div>
+                    <div className="h-8 w-8 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center shrink-0"><r.icon className="h-4 w-4" /></div>
                     <div>
                       <p className="text-sm font-medium">{r.title}</p>
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{r.desc}</p>
@@ -113,11 +118,13 @@ function Assistant() {
           </div>
 
           <div className="glass-card rounded-2xl p-5">
-            <h3 className="font-semibold flex items-center gap-2 mb-3"><BarChart3 className="h-4 w-4 text-primary" /> Data sources</h3>
-            <div className="space-y-2 text-sm">
+            <h3 className="font-semibold flex items-center gap-2 mb-3">
+              <BarChart3 className="h-4 w-4 text-primary" /> Data sources
+            </h3>
+            <div className="space-y-2.5 text-sm">
               {["Stripe · Live", "HubSpot · Live", "Google Analytics · Live", "Snowflake · Synced 2m ago", "Intercom · Live"].map((s) => (
-                <div key={s} className="flex items-center gap-2 text-muted-foreground">
-                  <span className="h-1.5 w-1.5 rounded-full bg-success" /> {s}
+                <div key={s} className="flex items-center gap-2.5 text-muted-foreground">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_6px_var(--color-success)] shrink-0" /> {s}
                 </div>
               ))}
             </div>
